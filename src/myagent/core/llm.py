@@ -4,11 +4,8 @@ from myagent.core.config import Settings
 from typing import Optional, Dict, Any
 
 class LLMClient:
-    def __init__(self, Setting: Optional[Settings] = None):
-        if Setting is None:
-            self.settings = Settings()
-        else:
-            self.settings = Setting
+    def __init__(self, settings: Settings):
+        self.settings = settings
 
     def chat(self, messages: list, stream=False, reasoning_effort="high", extra_body=None):
         client = OpenAI(
@@ -18,7 +15,7 @@ class LLMClient:
         response = client.chat.completions.create(
             model = self.settings.LLM_MODEL,
             messages = messages,
-            stream = False,
+            stream = stream,
             reasoning_effort = reasoning_effort,
             extra_body = extra_body or {"thinking": {"type": "enabled"}}
         )
