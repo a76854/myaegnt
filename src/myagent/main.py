@@ -1,8 +1,8 @@
-from myagent.core.config import Settings
+from myagent.core.config import get_settings
 from myagent.agent.agent import Agent
 
 def main():
-    settings = Settings()
+    settings = get_settings()
     agent = Agent(settings)
     messages = []
     while True:

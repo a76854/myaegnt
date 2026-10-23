@@ -8,9 +8,11 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "httpx>=0.28.1",
     "openai>=3.29.0",
     "pydantic-settings>=2.15.0",
     "pytest>=9.1.1",
+    "tavily>=1.1.0",
 ]
 
 [project.scripts]
