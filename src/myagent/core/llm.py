@@ -10,18 +10,18 @@ class LLMClient:
         )
 
     def chat(self, messages: list, stream=False, reasoning_effort="high", extra_body=None, tools=None, tool_choice=None):
-        kargs = {}
-        if tools is not None:
-            kargs["tools"] = tools
+        kwargs = {}
+        if tools:
+            kwargs["tools"] = tools
         if tool_choice is not None:
-            kargs["tool_choice"] = tool_choice
+            kwargs["tool_choice"] = tool_choice
         if extra_body is not None:
-            kargs["extra_body"] = extra_body
+            kwargs["extra_body"] = extra_body
         response = self.client.chat.completions.create(
             model = self.settings.model,
             messages = messages,
             stream = stream,
             reasoning_effort = reasoning_effort,
-            **kargs
+            **kwargs
         )
         return response

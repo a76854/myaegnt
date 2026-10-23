@@ -26,7 +26,7 @@ class Ctx7Tool(BaseTool):
 
     @property
     def client(self) -> Client:
-        if hasattr(self, '_client'):
+        if self._client is None:
             self._client = Client(base_url="https://context7.com/api/v2", headers={"Authorization": f"Bearer {self.api_key}"})
         return self._client
 
