@@ -1,7 +1,5 @@
-import pytest
 
 from myagent.core.config import LLMSettings, Settings, ToolsSettings
-
 
 LLM_ENV_KEYS = (
     "LLM_MODEL",

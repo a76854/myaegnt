@@ -1,6 +1,8 @@
-from .basetool import BaseTool
+
 from httpx import Client
-from typing import Optional
+
+from .basetool import BaseTool
+
 
 class Ctx7Tool(BaseTool):
     name = "context7"
@@ -19,7 +21,7 @@ class Ctx7Tool(BaseTool):
         },
         "required": ["library_name", "query"]
     }
-    
+
     def __init__(self, api_key: str):
         self.api_key = api_key
         self._client: Client | None = None
@@ -32,9 +34,9 @@ class Ctx7Tool(BaseTool):
 
     def run(self, library_name, query):
         try:
-            response = self.client.get(f"/libs/search", 
+            response = self.client.get("/libs/search",
                                        params={
-                                           "libraryName": library_name, 
+                                           "libraryName": library_name,
                                            "query": query})
             response.raise_for_status()
             return response.json()

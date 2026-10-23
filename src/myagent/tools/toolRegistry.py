@@ -1,6 +1,7 @@
 from typing import Any
-from myagent.tools import BashTool, Ctx7Tool, WebSearchTool
+
 from myagent.core.config import ToolsSettings
+from myagent.tools import BashTool, Ctx7Tool, WebSearchTool
 
 TOOL_CLASSES: tuple[type[Any], ...] = (BashTool, Ctx7Tool, WebSearchTool)
 
@@ -10,7 +11,7 @@ def tools() -> list[dict[str, Any]]:
         {
             "type": "function",
             "function":{
-                
+
                 "name": cls.name,
                 "description": cls.description,
                 "parameters": cls.schema

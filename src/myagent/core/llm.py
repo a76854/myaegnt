@@ -1,5 +1,7 @@
 from openai import OpenAI
+
 from myagent.core.config import LLMSettings
+
 
 class LLMClient:
     def __init__(self, settings: LLMSettings):

@@ -8,11 +8,11 @@
     （新增分组只要继承 _PrefixedSettings 并起个新前缀）
 """
 
+from functools import lru_cache
 from pathlib import Path
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from functools import lru_cache
 
 # 项目根目录（src/myagent/core/config.py -> 上溯 4 层），用于定位 .env，
 # 这样无论从哪个目录启动都能读到同一份配置。

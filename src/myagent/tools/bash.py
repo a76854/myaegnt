@@ -1,7 +1,9 @@
-from typing import List
-import subprocess
 import os
+import subprocess
+
 from .basetool import BaseTool
+
+
 class BashTool(BaseTool):
     name = "bash"
     description = "Execute bash commands on the local machine."

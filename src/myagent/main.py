@@ -1,5 +1,6 @@
-from myagent.core.config import get_settings
 from myagent.agent.agent import Agent
+from myagent.core.config import get_settings
+
 
 def main():
     settings = get_settings()

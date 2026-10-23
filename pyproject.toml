@@ -21,3 +21,46 @@ myagent = "myagent:main"
 [build-system]
 requires = ["uv_build>=0.12.5,<0.13.0"]
 build-backend = "uv_build"
+
+[tool.ruff]
+# 目标 Python 版本，需与 requires-python 保持一致
+target-version = "py39"
+# 行长度，Ruff 的 linter 和 formatter 共用
+line-length = 88
+# 排除目录
+extend-exclude = ["**/migrations/**", ".venv"]
+
+[tool.ruff.lint]
+# 启用的规则集
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort (import 排序)
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+    "SIM", # flake8-simplify
+]
+# 忽略的规则（例如 E501 通常交给 formatter 处理）
+ignore = ["E501"]
+
+[tool.ruff.format]
+# 格式化引号风格
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.12"
+# 开启严格模式（推荐新项目使用，老项目可按需开启）
+strict = true
+# 是否忽略缺少类型存根的第三方库
+ignore_missing_imports = true
+# 警告无用的 type: ignore 注释
+warn_unused_ignores = true
+# 警告冗余的类型转换
+warn_redundant_casts = true
+
+# 针对特定模块的覆盖配置（可选）
+[[tool.mypy.overrides]]
+module = "some_third_party_lib.*"
+ignore_missing_imports = true
