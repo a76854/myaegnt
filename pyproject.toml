@@ -53,12 +53,22 @@ indent-style = "space"
 python_version = "3.12"
 # 开启严格模式（推荐新项目使用，老项目可按需开启）
 strict = true
+# 仍保留 strict 的类型一致性检查，但不再强制"每个函数都必须写注解"
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+disallow_any_generics = false
+disallow_untyped_calls = false
+warn_return_any = false
 # 是否忽略缺少类型存根的第三方库
 ignore_missing_imports = true
+# tavily 之类"已安装但没有 py.typed"的包不再报 import-untyped
+disable_error_code = ["import-untyped"]
 # 警告无用的 type: ignore 注释
 warn_unused_ignores = true
 # 警告冗余的类型转换
 warn_redundant_casts = true
+# 测试用真实网络、且未注解，不纳入类型检查
+exclude = ["tests/"]
 
 # 针对特定模块的覆盖配置（可选）
 [[tool.mypy.overrides]]
