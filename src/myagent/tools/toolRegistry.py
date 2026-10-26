@@ -1,9 +1,17 @@
 from typing import Any
 
 from myagent.core.config import ToolsSettings
-from myagent.tools import BashTool, Ctx7Tool, WebSearchTool
+from myagent.tools import (
+    BashTool,
+    Ctx7Tool,
+    EditFile,
+    Glob,
+    ReadFile,
+    WebSearchTool,
+    WriteFile,
+)
 
-TOOL_CLASSES: tuple[type[Any], ...] = (BashTool, Ctx7Tool, WebSearchTool)
+TOOL_CLASSES: tuple[type[Any], ...] = (BashTool, Ctx7Tool, WebSearchTool, ReadFile, WriteFile, EditFile, Glob)
 
 def tools() -> list[dict[str, Any]]:
     """返回所有工具的实例列表。"""
@@ -25,5 +33,9 @@ def build_tools(settings: ToolsSettings) -> dict[str, Any]:
     return {
         BashTool.name: BashTool(),
         Ctx7Tool.name: Ctx7Tool(api_key=settings.ctx7_api_key),
-        WebSearchTool.name: WebSearchTool(api_key=settings.web_search_api_key)
+        WebSearchTool.name: WebSearchTool(api_key=settings.web_search_api_key),
+        ReadFile.name: ReadFile(),
+        WriteFile.name: WriteFile(),
+        EditFile.name: EditFile(),
+        Glob.name: Glob()
     }
