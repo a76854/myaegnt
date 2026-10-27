@@ -19,9 +19,6 @@ class Glob(BaseTool):
         "required": ["directory", "pattern"]
     }
 
-    def __init__(self):
-        pass
-
     def run(self, directory: str, pattern: str) -> list:
         import glob
         from pathlib import Path

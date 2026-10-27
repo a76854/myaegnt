@@ -18,8 +18,6 @@ class ReadFile(BaseTool):
         },
         "required": ["file_path", "limit"]
     }
-    def __init__(self):
-        pass
 
     def run(self, file_path: str, limit: int) -> str:
         try:
@@ -51,8 +49,6 @@ class WriteFile(BaseTool):
         },
         "required": ["file_path", "content"]
     }
-    def __init__(self):
-        pass
 
     def run(self, file_path: str, content: str) -> str:
         try:
@@ -86,8 +82,6 @@ class EditFile(BaseTool):
         },
         "required": ["file_path", "old_content", "new_content"]
     }
-    def __init__(self):
-        pass
 
     def run(self, file_path: str, old_content: str, new_content: str) -> str:
         try:

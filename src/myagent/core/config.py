@@ -66,7 +66,7 @@ class Settings(_PrefixedSettings):
     llm: LLMSettings = Field(default_factory=LLMSettings)
     tools: ToolsSettings = Field(default_factory=ToolsSettings)
 
-WROK_DIR = Path.cwd()
+WORK_DIR = Path.cwd()
 
 @lru_cache
 def get_settings() -> Settings:

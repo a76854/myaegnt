@@ -19,9 +19,6 @@ class BashTool(BaseTool):
     }
     dangerous_commands = tuple(["rm -rf /", "sudo", "shutdown", "reboot", "> /dev/"])
 
-    def __init__(self):
-        pass
-
     def run(self, command: str) -> str:
         if any(d in command for d in self.dangerous_commands):
             return "Error: Dangerous command blocked"
