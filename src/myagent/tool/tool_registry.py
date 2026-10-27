@@ -1,7 +1,7 @@
 from typing import Any
 
 from myagent.core.config import ToolsSettings
-from myagent.tools import (
+from myagent.tool.tools import (
     BashTool,
     Ctx7Tool,
     EditFile,

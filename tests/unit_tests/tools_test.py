@@ -1,4 +1,4 @@
-from myagent.tools.toolRegistry import TOOL_CLASSES, tools
+from myagent.tool.tool_registry import TOOL_CLASSES, tools
 
 
 def test_registry_exposes_all_tools_without_instantiation():

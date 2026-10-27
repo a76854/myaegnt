@@ -3,8 +3,8 @@ from typing import Any
 
 from myagent.core.config import LLMSettings, Settings, ToolsSettings
 from myagent.core.llm import LLMClient
-from myagent.tools import BaseTool
-from myagent.tools.toolRegistry import build_tools, tools
+from myagent.tool.tools import BaseTool
+from myagent.tool.tool_registry import build_tools, tools
 
 MAX_TOOL_RESULT_CHARS = 8000
 
