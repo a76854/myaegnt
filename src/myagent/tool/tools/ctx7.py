@@ -1,26 +1,20 @@
+from typing import Any
 
 from httpx import Client
+from pydantic import BaseModel, Field
 
 from .basetool import BaseTool
+
+
+class Ctx7Args(BaseModel):
+    library_name: str = Field(description="The name of the library to search in.")
+    query: str = Field(description="The search query to be executed.")
 
 
 class Ctx7Tool(BaseTool):
     name = "context7"
     description = "A tool for performing searches in the Context7 API."
-    schema = {
-        "type": "object",
-        "properties": {
-            "library_name": {
-                "type": "string",
-                "description": "The name of the library to search in."
-            },
-            "query": {
-                "type": "string",
-                "description": "The search query to be executed."
-            }
-        },
-        "required": ["library_name", "query"]
-    }
+    args_model = Ctx7Args
 
     def __init__(self, api_key: str):
         self.api_key = api_key
@@ -32,7 +26,7 @@ class Ctx7Tool(BaseTool):
             self._client = Client(base_url="https://context7.com/api/v2", headers={"Authorization": f"Bearer {self.api_key}"})
         return self._client
 
-    def run(self, library_name, query):
+    def run(self, library_name: str, query: str) -> Any:
         try:
             response = self.client.get("/libs/search",
                                        params={

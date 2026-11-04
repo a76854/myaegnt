@@ -1,23 +1,17 @@
+from pydantic import BaseModel, Field
+
 from .basetool import BaseTool, safe_path
+
+
+class ReadFileArgs(BaseModel):
+    file_path: str = Field(description="The path to the file to be read.")
+    limit: int = Field(description="The maximum number of characters to read from the file.")
 
 
 class ReadFile(BaseTool):
     name = "readFile"
     description = "Reads the content of a specified file."
-    schema = {
-        "type": "object",
-        "properties": {
-            "file_path": {
-                "type": "string",
-                "description": "The path to the file to be read."
-            },
-            "limit": {
-                "type": "integer",
-                "description": "The maximum number of characters to read from the file."
-            }
-        },
-        "required": ["file_path", "limit"]
-    }
+    args_model = ReadFileArgs
 
     def run(self, file_path: str, limit: int) -> str:
         try:
@@ -32,23 +26,16 @@ class ReadFile(BaseTool):
         except Exception as e:
             return f"Error: {e}"
 
+
+class WriteFileArgs(BaseModel):
+    file_path: str = Field(description="The path to the file to be written.")
+    content: str = Field(description="The content to write to the file.")
+
+
 class WriteFile(BaseTool):
     name = "writeFile"
     description = "Writes content to a specified file."
-    schema = {
-        "type": "object",
-        "properties": {
-            "file_path": {
-                "type": "string",
-                "description": "The path to the file to be written."
-            },
-            "content": {
-                "type": "string",
-                "description": "The content to write to the file."
-            }
-        },
-        "required": ["file_path", "content"]
-    }
+    args_model = WriteFileArgs
 
     def run(self, file_path: str, content: str) -> str:
         try:
@@ -61,27 +48,17 @@ class WriteFile(BaseTool):
         except Exception as e:
             return f"Error: {e}"
 
+
+class EditFileArgs(BaseModel):
+    file_path: str = Field(description="The path to the file to be edited.")
+    old_content: str = Field(description="The old content to be replaced.")
+    new_content: str = Field(description="The new content to write to the file.")
+
+
 class EditFile(BaseTool):
-    name = "editFile"
+    name = "edit"
     description = "Edits the content of a specified file."
-    schema = {
-        "type": "object",
-        "properties": {
-            "file_path": {
-                "type": "string",
-                "description": "The path to the file to be edited."
-            },
-            "old_content": {
-                "type": "string",
-                "description": "The old content to be replaced."
-            },
-            "new_content": {
-                "type": "string",
-                "description": "The new content to write to the file."
-            }
-        },
-        "required": ["file_path", "old_content", "new_content"]
-    }
+    args_model = EditFileArgs
 
     def run(self, file_path: str, old_content: str, new_content: str) -> str:
         try:
@@ -101,4 +78,3 @@ class EditFile(BaseTool):
             return "Error: Permission denied"
         except Exception as e:
             return f"Error: {e}"
-

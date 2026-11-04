@@ -4,7 +4,15 @@ from myagent.tool.tool_registry import TOOL_CLASSES, tools
 def test_registry_exposes_all_tools_without_instantiation():
     specs = tools()
 
-    assert {s["function"]["name"] for s in specs} == {"bash", "context7", "web_search"}
+    assert {s["function"]["name"] for s in specs} == {
+        "bash",
+        "context7",
+        "web_search",
+        "readFile",
+        "writeFile",
+        "edit",
+        "glob",
+    }
     for spec in specs:
         assert spec["type"] == "function"
         function = spec["function"]

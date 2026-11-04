@@ -1,23 +1,20 @@
 import os
 import subprocess
 
+from pydantic import BaseModel, Field
+
 from .basetool import BaseTool
+
+
+class BashArgs(BaseModel):
+    command: str = Field(description="The bash command to be executed.")
 
 
 class BashTool(BaseTool):
     name = "bash"
     description = "Execute bash commands on the local machine."
-    schema = {
-        "type": "object",
-        "properties": {
-            "command": {
-                "type": "string",
-                "description": "The bash command to be executed."
-            }
-        },
-        "required": ["command"]
-    }
-    dangerous_commands = tuple(["rm -rf /", "sudo", "shutdown", "reboot", "> /dev/"])
+    args_model = BashArgs
+    dangerous_commands = ("rm -rf /", "sudo", "shutdown", "reboot", "> /dev/")
 
     def run(self, command: str) -> str:
         if any(d in command for d in self.dangerous_commands):

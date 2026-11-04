@@ -1,10 +1,12 @@
 import json
 from typing import Any
 
+from pydantic import ValidationError
+
 from myagent.core.config import LLMSettings, Settings, ToolsSettings
 from myagent.core.llm import LLMClient
-from myagent.tool.tools import BaseTool
 from myagent.tool.tool_registry import build_tools, tools
+from myagent.tool.tools import BaseTool
 
 MAX_TOOL_RESULT_CHARS = 8000
 
@@ -78,16 +80,18 @@ class Agent:
 
     @staticmethod
     def _execute(impls: dict[str, BaseTool], name: str, raw_args: str) -> Any:
-        try:
-            args = json.loads(raw_args or "{}")
-        except json.JSONDecodeError as e:
-            return {"error": f"invalid JSON arguments: {e}"}
-
         tool = impls.get(name)
         if tool is None:
             return {"error": f"unknown tool: {name}"}
 
+        # 模型给的参数是不可信输入：先用工具的 args_model 校验/补齐类型，
+        # 校验失败就把可读的错误回给模型，而不是抛 TypeError。
         try:
-            return tool.run(**args)
+            args = tool.args_model.model_validate_json(raw_args or "{}")
+        except ValidationError as e:
+            return {"error": f"invalid arguments for {name}: {e}"}
+
+        try:
+            return tool.run(**args.model_dump())
         except Exception as e:  # 工具异常转成文本回给模型，别让循环崩掉
             return {"error": f"{type(e).__name__}: {e}"}

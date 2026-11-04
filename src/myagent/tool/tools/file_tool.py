@@ -1,27 +1,22 @@
+import glob
+from pathlib import Path
+
+from pydantic import BaseModel, Field
+
 from .basetool import BaseTool, safe_path
+
+
+class GlobArgs(BaseModel):
+    directory: str = Field(description="The directory to search in.")
+    pattern: str = Field(description="The glob pattern to match files.")
 
 
 class Glob(BaseTool):
     name = "glob"
     description = "List files in a directory matching a pattern."
-    schema = {
-        "type": "object",
-        "properties": {
-            "directory": {
-                "type": "string",
-                "description": "The directory to search in."
-            },
-            "pattern": {
-                "type": "string",
-                "description": "The glob pattern to match files."
-            }
-        },
-        "required": ["directory", "pattern"]
-    }
+    args_model = GlobArgs
 
-    def run(self, directory: str, pattern: str) -> list:
-        import glob
-        from pathlib import Path
+    def run(self, directory: str, pattern: str) -> list[str]:
         try:
             # Ensure the directory is safe
             abs_directory = safe_path(directory)
